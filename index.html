@@ -19,67 +19,64 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h4>{{list.name}}</h4>
-                            <button 
-                            
-                            :class="list.status =='creating' ? 'btn-warning' : 'btn-danger'"
-                            class="btn btn-sm"
-                            @click="removeList(index)"
-                            >
-                            {{ list.status == 'creating' ? 'Cancelar' : 'Eliminar'}}  <!--{{index}}-->
+                            <button :class="list.status =='creating' ? 'btn-warning' : 'btn-danger'" class="btn btn-sm"
+                                @click="removeList(index)">
+                                {{ list.status == 'creating' ? 'Cancelar' : 'Eliminar'}}
+                                <!--{{index}}-->
                             </button>
                         </div>
                     </div>
                     <div class="card-body">
                         <form @submit.prevent="saveList(list)" action="/">
                             <div class="form-group" v-if="list.status != 'saved'">
-                                <input class="form-control" 
-                                placeholder="Nombre de la lista"
-                                v-model="list.name"
-                                >
-                                
+                                <input class="form-control" placeholder="Nombre de la lista" v-model="list.name">
+
                             </div>
                             <!--<button v-if="list.status !='saved'" class="btn btn-primary btn-block">-->
-                                    <button v-if="list.status =='creating'" class="btn btn-primary btn-block">
+                            <button v-if="list.status =='creating'" class="btn btn-primary btn-block">
                                 Guardar
                             </button>
                         </form>
                         <div>
-                        <form @submit.prevent="saveCards(conte)" action="/">
-                            <div class="card-text form-group" v-if="list.status =='saved'" v-for="(conte, index2) in contenido" :key="index2">
-                                    <input class="form-control" 
-                                    placeholder="Agregar"
-                                    v-model="conte.texto"
-                                    >
-                            </div>
-                                <!--  <button class="btn btn-primary btn-block" v-if="list.status =='saved'" @click="addCards">
+                            <div v-for="(card, index) in list.contenido">
+                                <p v-if="list.contenido[index].status=='uno'" style="margin-bottom: 5px;">
+                                    {{index +1}} {{list.contenido[index].name}}
+                                </p>
+                                <form @submit.prevent="addCards(list)" action="/">
+                                    <!--update(list,index) deleteList(list,index)-->
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Agregar"
+                                            v-model="list.contenido[index].name"
+                                            v-if="list.contenido[index].status == 'cero'">
+                                    </div>
+                                    <!--  <button class="btn btn-primary btn-block" v-if="list.status =='saved'" @click="addCards">
                                         Agregar
                                     </button> -->
 
-                                   <!--<div>-->
-                                        <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu" v-if="list.status =='saved'">
-                                          <b-button-group class="mx-1">
-                                            <b-button @click="addCards">Agregar</b-button>
-                                            <b-button @click="editcar">Editar</b-button>
-                                            <b-button @click="removeList">Eliminar</b-button>
-                                          </b-button-group>
-                                        </b-button-toolbar>
-                                    <!--</div>-->
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-secondary" @click="addCards(list)"
+                                            v-if="list.status == 'saved'">Agregar</button>
+                                        <button type="button" class="btn btn-secondary" @click="update(list,index)">
+                                            {{ list.contenido[index].status == 'uno' ? 'edList' : 'Editar'}}
+                                        </button>
+                                        <button type="button" class="btn btn-secondary"
+                                            @click="deleteList(list,index)">Eliminar</button>
+                                    </div>
 
-                            </form> 
-                        </div>  
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <button class="btn rounded-0 btn-outline-dark btn-block" @click="addList">
+                            Agregar lista
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mt-3">
-                <button class="btn rounded-0 btn-outline-dark btn-block" @click="addList" >
-                    Agregar lista
-                </button>
-            </div>
         </div>
-    </div>
-    <!-- development version, includes helpful console warnings -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <!--<script src="./javascript.js"></script>-->
-    <script src="main.js"></script>
+        <!-- development version, includes helpful console warnings -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="main.js"></script>
 </body>
 </html>

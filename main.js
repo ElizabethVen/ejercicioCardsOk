@@ -1,21 +1,17 @@
-import { BButtonGroup } from 'bootstrap-vue'
-Vue.component('b-button-group', BButtonGroup)
-
-import { CardPlugin } from 'bootstrap-vue'
-Vue.use(CardPlugin)
-
 const app = new Vue({
     el: '#app',
     data: {
-        lists: [],
-        contenido: [],
-        conte:[]
+        lists: [], 
+        conte: [],
+        edList: "non"
     },
     methods: {
         addList() {
             const newList = {
+                contenido: [],
                 name: '',
-                status: 'creating'
+                status: 'creating',
+                card:""
             }
             this.lists.push(newList)
         },
@@ -25,43 +21,30 @@ const app = new Vue({
         removeList(index) {
             this.lists.splice(index, 1)
         },
-        addCards() {
+        //Inicia funciones boton triple
+        addCards(list) {
             const newCard = {
-                texto: '',
-                status2: 'creating'
+                name:list.card,
+                status: 'creating'
             }
-            this.contenido.push(newCard)
+          list.contenido.push(newCard)
+          list.card = ""
         },
-        saveCards(conte){
-            conte.status2 = 'saved'
-        },
-        removeList(index) {
-            this.lists.splice(index, 1)
-        },
-        saveCard(list){
-            const card1={
-                name: list.card,
-                status: "ok",
+        
+        update(list, index) {
+            if (list.contenido[index].status == "cero") {
+                list.contenido[index].status = "uno"
             }
-            list.cards.push(card1)
-            list.card = ""
-        },
-        editcards(list, index){
-           //list.cards[index].status = "no"
-          if(list.cards[index].status == "no"){
-            list.cards[index].status = "ok"
-          }
-          else if(list.cards[index].status == "ok"){
-            list.cards[index].status = "no"
-          }
-            },
-            delateCards(list, index){
-                list.cards.splice(index, 1)
-            },
-            editNameList(list){
-                list.status = 'creating'
-                
+            else if (list.contenido[index].status == "uno") {
+                list.contenido[index].status = "cero"
             }
+        },
+        deleteList(list, index) {
+            this.list.contenido.splice(index, 1)
+        },
+        editNameList(list) {
+            this.list.status = 'creating'
+        }
 
 
     }
