@@ -2,8 +2,6 @@ const app = new Vue({
     el: '#app',
     data: {
         lists: [], 
-        conte: [],
-        edList: "non"
     },
     methods: {
         addList() {
@@ -11,23 +9,24 @@ const app = new Vue({
                 contenido: [],
                 name: '',
                 status: 'creating',
-                card:""
+                card: "",
+                edList: "non"
             }
-            this.lists.push(newList)
+            this.lists.push(newList) //agrega una nueva lista
         },
         saveList(list) {
-            list.status = 'saved'
+            list.status = 'saved'  // 
         },
         removeList(index) {
-            this.lists.splice(index, 1)
+            this.lists.splice(index, 1)  //splice() cambia el contenido de lists eliminando el elemento indicado en el index
         },
         //Inicia funciones boton triple
         addCards(list) {
             const newCard = {
                 name:list.card,
-                status: 'creating'
+                status: 'ok'
             }
-          list.contenido.push(newCard)
+          this.contenido.push(newCard),
           list.card = ""
         },
         
@@ -40,10 +39,12 @@ const app = new Vue({
             }
         },
         deleteList(list, index) {
-            this.list.contenido.splice(index, 1)
+           // this.list.contenido.splice(index, 1)
+            list.contenido.splice(index, 1)
         },
         editNameList(list) {
-            this.list.status = 'creating'
+         //   this.list.status = 'creating'
+            list.status = 'creating'
         }
 
 
